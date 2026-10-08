@@ -14,13 +14,6 @@ import * as postsActions from './features/postsSlice';
 import { actions as selectedPostActions } from './features/selectedPostSlice';
 
 export const App: React.FC = () => {
-  // const [posts, setPosts] = useState<Post[]>([]);
-  // const [loaded, setLoaded] = useState(false);
-  // const [hasError, setError] = useState(false);
-
-  // const [author, setAuthor] = useState<User | null>(null);
-  // const [selectedPost, setSelectedPost] = useState<Post | null>(null);
-
   const { author } = useAppSelector(state => state.author);
   const { loaded, posts, hasError } = useAppSelector(state => state.posts);
   const { selectedPost } = useAppSelector(state => state.selectedPost);
@@ -28,18 +21,9 @@ export const App: React.FC = () => {
 
   function loadUserPosts(userId: number) {
     dispatch(postsActions.init(userId));
-    // setLoaded(false);
-
-    // getUserPosts(userId)
-    //   .then(setPosts)
-    //   .catch(() => setError(true))
-    //   // We disable the spinner in any case
-    //   .finally(() => setLoaded(true));
   }
 
   useEffect(() => {
-    // we clear the post when an author is changed
-    // not to confuse the user
     dispatch(selectedPostActions.clear());
 
     if (author) {

@@ -14,9 +14,6 @@ type Props = {
 };
 
 export const PostDetails: React.FC<Props> = ({ post }) => {
-  // const [comments, setComments] = useState<Comment[]>([]);
-  // const [loaded, setLoaded] = useState(false);
-  // const [hasError, setError] = useState(false);
   const [visible, setVisible] = useState(false);
 
   const { comments, loaded, hasError } = useAppSelector(
@@ -34,32 +31,6 @@ export const PostDetails: React.FC<Props> = ({ post }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post.id, dispatch]);
 
-  // The same useEffect with async/await
-  /*
-  async function loadComments() {
-    setLoaded(false);
-    setVisible(false);
-    setError(false);
-
-    try {
-      const commentsFromServer = await commentsApi.getPostComments(post.id);
-
-      setComments(commentsFromServer);
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoaded(true);
-    }
-  };
-
-  useEffect(() => {
-    loadComments();
-  }, []);
-
-  useEffect(loadComments, [post.id]); // Wrong!
-  // effect can return only a function but not a Promise
-  */
-
   const addComment = async ({ name, email, body }: CommentData) => {
     try {
       const newComment = await commentsApi.createComment({
@@ -69,13 +40,7 @@ export const PostDetails: React.FC<Props> = ({ post }) => {
         postId: post.id,
       });
 
-      // setComments(currentComments => [...currentComments, newComment]);
       dispatch(commentsActions.actions.add(newComment));
-
-      // setComments([...comments, newComment]);
-      // works wrong if we wrap `addComment` with `useCallback`
-      // because it takes the `comments` cached during the first render
-      // not the actual ones
     } catch (error) {
       // we show an error message in case of any error
       dispatch(commentsActions.actions.showError());
@@ -83,8 +48,6 @@ export const PostDetails: React.FC<Props> = ({ post }) => {
   };
 
   const deleteComment = async (commentId: number) => {
-    // we delete the comment immediately so as
-    // not to make the user wait long for the actual deletion
     // eslint-disable-next-line max-len
     dispatch(commentsActions.actions.deleteComment(commentId));
 
