@@ -4,13 +4,13 @@ import { Post } from '../types/Post';
 import { getUserPosts } from '../api/posts';
 
 type PostsState = {
-  posts: Post[];
+  items: Post[];
   loaded: boolean;
   hasError: boolean;
 };
 
 const initialState: PostsState = {
-  posts: [],
+  items: [],
   loaded: false,
   hasError: false,
 };
@@ -24,7 +24,7 @@ const posts = createSlice({
   initialState,
   reducers: {
     clear: state => {
-      state.posts = [];
+      state.items = [];
     },
   },
   extraReducers: builder => {
@@ -33,7 +33,7 @@ const posts = createSlice({
       state.hasError = false;
     });
     builder.addCase(init.fulfilled, (state, action) => {
-      state.posts = action.payload;
+      state.items = action.payload;
       state.loaded = true;
     });
     builder.addCase(init.rejected, state => {

@@ -11,7 +11,7 @@ const initialState: UsersState = {
   users: [],
 };
 
-export const init = createAsyncThunk('goods/fetch', () => {
+export const init = createAsyncThunk('users/fetch', () => {
   return getUsers();
 });
 
